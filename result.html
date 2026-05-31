@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+        }
+        .card {
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">🚀 Resume Dashboard</h1>
+
+    <!-- Score + ATS -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card text-center p-4 mb-4 bg-light text-dark">
+                <h3>Resume Score</h3>
+                <h1>{{ score }}/100</h1>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card text-center p-4 mb-4 bg-light text-dark">
+                <h3>ATS Match</h3>
+                <h1>{{ ats }}%</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback -->
+    <div class="card p-4 mb-4 bg-light text-dark">
+        <h3>🧠 AI Feedback</h3>
+        <p><strong>Level:</strong> {{ level }}</p>
+        <p>{{ feedback }}</p>
+    </div>
+
+    <!-- Skills + Jobs -->
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card p-3 mb-4 bg-light text-dark">
+                <h4>Skills</h4>
+                <ul>
+                    {% for skill in skills %}
+                    <li>{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card p-3 mb-4 bg-light text-dark">
+                <h4>Recommended Jobs</h4>
+                <ul>
+                    {% for job in jobs %}
+                    <li>{{ job }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Chart -->
+    <div class="card p-4 mb-4 bg-light text-dark">
+        <h4>📊 Skills Chart</h4>
+        <canvas id="chart"></canvas>
+    </div>
+
+    <!-- Projects -->
+    <h2 class="text-center mb-4">🚀 Recommended Projects</h2>
+
+    <div class="row text-dark">
+
+        <div class="col-md-2">
+            <div class="card p-3 mb-4">
+                <h6>📊 Data Analyst</h6>
+                <ul>
+                    <li>AI Resume Dashboard</li>
+                    <li>Stock Analyzer</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card p-3 mb-4">
+                <h6>🎨 Frontend</h6>
+                <ul>
+                    <li>AI Portfolio</li>
+                    <li>UI Dashboard</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card p-3 mb-4">
+                <h6>⚙️ Backend</h6>
+                <ul>
+                    <li>Auth API</li>
+                    <li>Parser API</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card p-3 mb-4">
+                <h6>💻 Full Stack</h6>
+                <ul>
+                    <li>Job Portal</li>
+                    <li>Marketplace</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card p-3 mb-4">
+                <h6>🔐 Cybersecurity</h6>
+                <ul>
+                    <li>Vulnerability Scanner</li>
+                    <li>Password Checker</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card p-3 mb-4">
+                <h6>👔 HR Manager</h6>
+                <ul>
+                    <li>Employee System</li>
+                    <li>Resume Shortlisting Tool</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-center">
+        <a href="/" class="btn btn-warning">Analyze Another</a>
+    </div>
+
+</div>
+
+<script>
+    const skills = JSON.parse('{{ skills | tojson | safe }}');
+    const values = skills.map(() => 100);
+
+    new Chart(document.getElementById('chart'), {
+        type: 'bar',
+        data: {
+            labels: skills,
+            datasets: [{
+                label: 'Skill Strength',
+                data: values
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true, max: 100 }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
